@@ -1,2 +1,2 @@
 # aws-beginner
-Découvrir le cloud avec AWS en développant un data pipeline
+Ressources de mon tutoriel [Découvrir le cloud avec AWS en développant un data pipeline](https://blog.engineering.publicissapient.fr/2021/04/29/decouvrir-le-cloud-avec-aws-en-developpant-un-data-pipeline-partie-1/)

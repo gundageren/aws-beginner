@@ -1,0 +1,28 @@
+{
+  "Comment": "Convert to parquet and crawl data",
+  "StartAt": "Start Glue Job",
+  "States": {
+    "Start Glue Job": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "transform_to_parquet",
+        "Arguments": {
+          "--table.$": "$.table"
+        }
+      },
+      "Next": "Start Crawler"
+    },
+    "Start Crawler": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:us-east-2:<AccountID>:function:start-crawler:$LATEST",
+        "Payload": {
+          "crawler-name": "parquet-datalake"
+        }
+      },
+      "End": true
+    }
+  }
+}
