@@ -15,16 +15,17 @@ object TransformToParquet {
     val args = GlueArgParser.getResolvedOptions(sysArgs, Seq("JOB_NAME", "table").toArray)
     Job.init(args("JOB_NAME"), glueContext, args.asJava)
     
+    val datalake = "<YourDatalakeBucket>"
     val table = args("table")
     
     val inputData = sparkSession.read
       .format("csv")
       .option("header", "true")
-      .load(s"s3://<YourDatalakeBucket>/raw/$table/*.csv")
+      .load(s"s3://$datalake/raw/$table/*.csv")
     
     val output = inputData.write
       .mode(SaveMode.Overwrite)
-      .parquet(s"s3://<YourDatalakeBucket>/parquet/$table/")
+      .parquet(s"s3://$datalake/parquet/$table/")
     Job.commit()
   }
 }
